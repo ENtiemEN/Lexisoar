@@ -1,6 +1,6 @@
 import {z} from 'zod';
-import {grammarTopics} from '../shared/grammar-catalog';
-import {vocabularyCatalog} from '../shared/vocabulary-catalog';
+import {grammarTopics} from '../shared/grammar-catalog.js';
+import {vocabularyCatalog} from '../shared/vocabulary-catalog.js';
 const text=z.string().max(12000),date=z.iso.datetime({offset:true}),id=z.string().min(1).max(200).refine(s=>!['__proto__','constructor','prototype'].includes(s)),revision=z.number().int().nonnegative();
 const map=<T extends z.ZodType>(schema:T)=>z.record(id,schema);
 const card=z.object({due:date,stability:z.number().nonnegative(),difficulty:z.number().min(0).max(10),elapsed_days:z.number().nonnegative(),scheduled_days:z.number().nonnegative(),reps:revision,lapses:revision,state:z.number().int().min(0).max(3),last_review:date.optional(),learning_steps:revision.optional()});

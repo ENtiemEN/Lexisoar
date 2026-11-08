@@ -1,5 +1,5 @@
-import type {Activity, Skill} from './content';
-import type {Observation} from './progress';
+import type {Activity, Skill} from './content.js';
+import type {Observation} from './progress.js';
 
 export type Scene = {
   id: string; skill: Skill; label: string; objective: string; instruction: string;

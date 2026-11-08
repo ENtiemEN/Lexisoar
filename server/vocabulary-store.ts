@@ -1,10 +1,10 @@
 import {randomUUID} from 'node:crypto';
 import {createEmptyCard,fsrs,type Card,Rating} from 'ts-fsrs';
-import type {Store} from './store';
-import {activities} from '../shared/content';
-import {chapters} from '../shared/chapters';
-import {vocabularyCatalog} from '../shared/vocabulary-catalog';
-import {correctWord,type Direction,type VocabEntry,type VocabWord,type VocabSession,type VocabResult,type VocabSummary,type VocabFeedback} from '../shared/vocabulary';
+import type {Store} from './store.js';
+import {activities} from '../shared/content.js';
+import {chapters} from '../shared/chapters.js';
+import {vocabularyCatalog} from '../shared/vocabulary-catalog.js';
+import {correctWord,type Direction,type VocabEntry,type VocabWord,type VocabSession,type VocabResult,type VocabSummary,type VocabFeedback} from '../shared/vocabulary.js';
 export type VocabularyData={words:Record<string,VocabWord>;cards:Record<string,any>;sessions:Record<string,VocabSession>;feedback:Record<string,{requestId:string;entryId:string;entryVersion:number;answer:string;date:string;feedback:VocabFeedback}>;assist:Record<string,any>};
 export const cardKey=(e:VocabEntry,d:Direction)=>`${e.id}/${e.senseId}/${e.version}/${d}`;
 const conflict=()=>Object.assign(Error('This session changed in another tab. Reload to recover the latest saved work.'),{statusCode:409});

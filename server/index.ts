@@ -1,4 +1,4 @@
-import {buildApp} from './app';
+import {buildApp} from './app.js';
 import {existsSync} from 'node:fs';
 if(existsSync('.env'))process.loadEnvFile('.env');
 const port=Number(process.env.PORT||4180);

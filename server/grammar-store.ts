@@ -1,9 +1,9 @@
 import {randomUUID} from 'node:crypto';
 import {createEmptyCard,fsrs,type Card,Rating} from 'ts-fsrs';
-import type {Store} from './store';
-import {grammarTopics} from '../shared/grammar-catalog';
-import {grammarAnswer,type GrammarSession,type GrammarStep,type GrammarResponse,type GrammarReview,type GrammarAssistance,type GrammarSummary,type GrammarObjective} from '../shared/grammar';
-import {dayKey,shiftDay} from './progress-summary';
+import type {Store} from './store.js';
+import {grammarTopics} from '../shared/grammar-catalog.js';
+import {grammarAnswer,type GrammarSession,type GrammarStep,type GrammarResponse,type GrammarReview,type GrammarAssistance,type GrammarSummary,type GrammarObjective} from '../shared/grammar.js';
+import {dayKey,shiftDay} from './progress-summary.js';
 export type GrammarData={sessions:Record<string,GrammarSession>;cards:Record<string,any>;reviews:GrammarReview[];assistance:Record<string,GrammarAssistance>};
 export const grammarCardKey=(objective:GrammarObjective)=>`${objective.id}/${objective.version}`;
 const conflict=()=>Object.assign(Error('This round changed in another tab. Reload to recover its latest saved state.'),{statusCode:409});

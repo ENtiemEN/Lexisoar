@@ -1,4 +1,4 @@
-import {grammarRoutes,type GrammarAssistProvider} from './grammar-routes';
+import {grammarRoutes,type GrammarAssistProvider} from './grammar-routes.js';
 import Fastify from 'fastify';
 import cookie from '@fastify/cookie';
 import staticFiles from '@fastify/static';
@@ -8,15 +8,15 @@ import {resolve,join} from 'node:path';
 import {z} from 'zod';
 import {createEmptyCard,fsrs,Rating,type Card} from 'ts-fsrs';
 import {createClient,type SupabaseClient} from '@supabase/supabase-js';
-import {Store} from './store';
-import {ChatGPT} from './chatgpt';
-import {attemptInput,tutorInput} from '../shared/contracts';
-import {activities,assess} from '../shared/content';
+import {Store} from './store.js';
+import {ChatGPT} from './chatgpt.js';
+import {attemptInput,tutorInput} from '../shared/contracts.js';
+import {activities,assess} from '../shared/content.js';
 import {chooseModel,tutorReply} from '../probes/tutor-service.mjs';
-import {studyRoutes,type StudyOptions} from './study-routes';
-import {AssessmentStore} from './assessment-store';
-import {progressRoutes} from './progress-routes';
-import {vocabularyRoutes,type VocabAssistProvider} from './vocabulary-routes';
+import {studyRoutes,type StudyOptions} from './study-routes.js';
+import {AssessmentStore} from './assessment-store.js';
+import {progressRoutes} from './progress-routes.js';
+import {vocabularyRoutes,type VocabAssistProvider} from './vocabulary-routes.js';
 type Session={owner:string;csrf:string;label:string;cloud?:{access_token:string;refresh_token:string}};
 // Remote plan usage remains disabled until OpenAI grants the hosted integration.
 function remoteChat():ChatGPT{const unavailable=()=>{throw Object.assign(Error('Hosted ChatGPT access is not enabled yet. Your work is saved; use the local examples or self-review.'),{statusCode:503});};return {vault:{get:async()=>null,set:unavailable,remove:async()=>{}},token:async()=>unavailable(),start:unavailable,finish:async()=>unavailable()} as unknown as ChatGPT;}

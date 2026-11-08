@@ -1,4 +1,4 @@
-import type {Band,VocabEntry} from './vocabulary';
+import type {Band,VocabEntry} from './vocabulary.js';
 // Original draft definitions/examples, not a redistribution of dictionary or EVP data.
 // Each row is one sense. CEFR bands are editorial approximations, not validated ratings.
 type Row=[string,string,string,string,string,string,string];

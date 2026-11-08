@@ -1,9 +1,9 @@
 import type {IncomingMessage,ServerResponse} from 'node:http';
-import {buildApp} from '../server/app';
-import {Store} from '../server/store';
-import {CloudRepository} from '../server/cloud-repository';
-import {dumpWorkspace,restoreWorkspace,importBackup,backupDigest,backupSchema} from '../server/workspace';
-import {cloudConfig,supabaseClient,cookieValue,seal,unseal,webCookie,newCsrf,verifiedSession,oauthClient,type WebSession} from '../server/cloud-auth';
+import {buildApp} from '../server/app.js';
+import {Store} from '../server/store.js';
+import {CloudRepository} from '../server/cloud-repository.js';
+import {dumpWorkspace,restoreWorkspace,importBackup,backupDigest,backupSchema} from '../server/workspace.js';
+import {cloudConfig,supabaseClient,cookieValue,seal,unseal,webCookie,newCsrf,verifiedSession,oauthClient,type WebSession} from '../server/cloud-auth.js';
 import {z} from 'zod';
 const sessionCookie='__Host-lexisoar_session',oauthCookie='__Host-lexisoar_oauth';
 export default async function handler(req:IncomingMessage&{body?:unknown},res:ServerResponse){

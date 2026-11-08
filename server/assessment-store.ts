@@ -1,7 +1,7 @@
 import {createHash} from 'node:crypto';
-import type {Store} from './store';
-import {RUBRIC_VERSION,type Assessment} from '../shared/progress';
-import {validatedObservations} from './assessment-validation';
+import type {Store} from './store.js';
+import {RUBRIC_VERSION,type Assessment} from '../shared/progress.js';
+import {validatedObservations} from './assessment-validation.js';
 export const responseHash=(answer:string)=>createHash('sha256').update(answer).digest('hex');
 export class AssessmentStore{
  constructor(private store:Store){store.raw.exec('CREATE TABLE IF NOT EXISTS progress_assessments(owner TEXT NOT NULL,attempt_id TEXT NOT NULL,rubric_version TEXT NOT NULL,data TEXT NOT NULL,PRIMARY KEY(owner,attempt_id,rubric_version));');}

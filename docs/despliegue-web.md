@@ -1,5 +1,7 @@
 # LexiSoar 0.6 · Despliegue de la beta privada
 
+Corrección del primer despliegue (8/11/2026): los logs reales mostraron `ERR_MODULE_NOT_FOUND` para `/var/task/server/app`, importado desde `api/web.js`. Los imports relativos del backend y compartidos ahora declaran extensión `.js`, compatible con el JavaScript ESM emitido. `npm run build` incluye `check:server`: compila con NodeNext y carga el gateway y una sesión SQLite en memoria mediante Node nativo, sin cargadores de desarrollo ni servidor. Corrección comprobada localmente con build y 94 pruebas; requiere subir el commit y verificar el nuevo deployment. No implica que el dominio ya esté reparado.
+
 Estado: código y esquema preparados; Google, despliegue Vercel y prueba publicada pendientes. GPT remoto permanece deshabilitado hasta resolver el acceso oficial. No considerar completa la beta con IA mientras ese requisito siga pendiente.
 
 ## 1. Supabase (proyecto ya creado)

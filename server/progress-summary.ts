@@ -1,7 +1,7 @@
-import {activities,type Activity,type Skill} from '../shared/content';
-import {chapters,type Scene,type StudyRun} from '../shared/chapters';
-import {criteria,RUBRIC_VERSION,type Assessment,type EvidenceMetric,type EvidenceCohort,type ProgressSummary,type ProgressPattern,type SkillProgress,type HistoryItem} from '../shared/progress';
-import {responseHash} from './assessment-store';
+import {activities,type Activity,type Skill} from '../shared/content.js';
+import {chapters,type Scene,type StudyRun} from '../shared/chapters.js';
+import {criteria,RUBRIC_VERSION,type Assessment,type EvidenceMetric,type EvidenceCohort,type ProgressSummary,type ProgressPattern,type SkillProgress,type HistoryItem} from '../shared/progress.js';
+import {responseHash} from './assessment-store.js';
 
 export type LearningEvent={id:string;kind:string;createdAt:string;data:any};
 export type ResolvedAttempt={event:LearningEvent;activity:Activity;scene:Scene|null;first:boolean;rootId:string;assisted:boolean;assessment:Assessment|null;canAssess:boolean;version:string};

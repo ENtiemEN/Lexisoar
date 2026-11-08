@@ -1,10 +1,10 @@
 import {z} from 'zod';
-import type {Store} from './store';
-import {stateSchema} from './study-store';
+import type {Store} from './store.js';
+import {stateSchema} from './study-store.js';
 import {createHash} from 'node:crypto';
-import {validateTrainingBackup} from './backup-validation';
-import {chapters} from '../shared/chapters';
-import {feedbackSchema} from './task-feedback';
+import {validateTrainingBackup} from './backup-validation.js';
+import {chapters} from '../shared/chapters.js';
+import {feedbackSchema} from './task-feedback.js';
 
 export const workspaceTables=['events','study_runs','study_feedback','progress_assessments','vocabulary_workspace','grammar_workspace'] as const;
 export type Workspace=Record<typeof workspaceTables[number],Record<string,any>[]>;

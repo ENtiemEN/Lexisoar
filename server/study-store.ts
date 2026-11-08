@@ -1,7 +1,7 @@
 import {randomUUID} from 'node:crypto';
 import {z} from 'zod';
-import type {Store} from './store';
-import {chapters,initialRunState,type StudyRun,type RunState,type Chapter,type FeedbackRecord} from '../shared/chapters';
+import type {Store} from './store.js';
+import {chapters,initialRunState,type StudyRun,type RunState,type Chapter,type FeedbackRecord} from '../shared/chapters.js';
 
 export const draftSchema=z.object({text:z.string().max(10000),source:z.enum(['typed','speech']),choices:z.record(z.string().max(80),z.string().max(500)),helped:z.boolean(),audioId:z.uuid().optional()});
 export const stateSchema=z.object({sceneIndex:z.number().int().min(0).max(4),status:z.enum(['active','paused','completed']),consent:z.boolean(),model:z.string().max(120).optional(),scenes:z.record(z.string().max(80),z.object({draft:draftSchema,attemptIds:z.array(z.uuid()).max(100),view:z.enum(['respond','feedback'])})),review:z.record(z.string().max(80),z.number().int().min(1).max(4)),reflection:z.string().max(2000)});

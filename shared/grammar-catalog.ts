@@ -1,4 +1,4 @@
-import type {GrammarTopic,GrammarExercise} from './grammar';
+import type {GrammarTopic,GrammarExercise} from './grammar.js';
 // Original practice content. Each row pairs controlled tasks about a concrete meaning.
 // [frame, accepted fragment(s), instruction, incorrect fragment, intended situation]
 type Row=[string,string,string,string,string];

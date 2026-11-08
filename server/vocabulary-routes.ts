@@ -1,9 +1,9 @@
 import {z} from 'zod';
 import {randomUUID} from 'node:crypto';
-import {vocabularyCatalog} from '../shared/vocabulary-catalog';
-import type {VocabEntry,VocabFeedback} from '../shared/vocabulary';
-import {VocabularyStore} from './vocabulary-store';
-import type {StudyOptions} from './study-routes';
+import {vocabularyCatalog} from '../shared/vocabulary-catalog.js';
+import type {VocabEntry,VocabFeedback} from '../shared/vocabulary.js';
+import {VocabularyStore} from './vocabulary-store.js';
+import type {StudyOptions} from './study-routes.js';
 import {chooseModel,tutorReply} from '../probes/tutor-service.mjs';
 const text=z.string().trim().min(1).max(500),example=z.string().trim().min(1).max(1200);
 const entrySchema=z.object({word:text,partOfSpeech:text,meaning:example,examples:z.array(example).min(1).max(2),level:z.enum(['B1','B2','C1','C2']).nullable().default(null),topic:text.default('My words'),collocations:z.array(text).max(4).default([]),note:z.string().max(1000).default(''),cloze:z.string().max(1200).default(''),answers:z.array(text).min(1).max(10).optional(),prompt:z.string().max(1000).optional()});

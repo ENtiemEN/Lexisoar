@@ -1,8 +1,8 @@
 import {z} from 'zod';
-import {grammarTopics} from '../shared/grammar-catalog';
-import {GrammarStore} from './grammar-store';
-import type {StudyOptions} from './study-routes';
-import type {GrammarTopic,GrammarExercise,GrammarFeedback} from '../shared/grammar';
+import {grammarTopics} from '../shared/grammar-catalog.js';
+import {GrammarStore} from './grammar-store.js';
+import type {StudyOptions} from './study-routes.js';
+import type {GrammarTopic,GrammarExercise,GrammarFeedback} from '../shared/grammar.js';
 import {chooseModel,tutorReply} from '../probes/tutor-service.mjs';
 export type GrammarAssistInput={action:'explain'|'review';topic:GrammarTopic;exercise?:GrammarExercise;answer:string};
 export type GrammarAssistProvider=(input:GrammarAssistInput)=>Promise<unknown>;

@@ -1,5 +1,5 @@
 import type {SupabaseClient} from '@supabase/supabase-js';
-import type {Workspace} from './workspace';
+import type {Workspace} from './workspace.js';
 export class CloudRepository{
  constructor(private admin:SupabaseClient){}
  async load(owner:string){const {data,error}=await this.admin.from('lexisoar_workspaces').select('revision,state,import_hash').eq('user_id',owner).maybeSingle();if(error)throw Error('Could not load your saved work. Try again.');return data?{revision:Number(data.revision),state:data.state as Partial<Workspace>,importHash:data.import_hash as string|null}:{revision:-1,state:{},importHash:null};}

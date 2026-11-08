@@ -1,13 +1,13 @@
 import type {FastifyInstance} from 'fastify';
 import {z} from 'zod';
 import {createEmptyCard,fsrs,Rating,type Card} from 'ts-fsrs';
-import type {Store} from './store';
-import type {ChatGPT} from './chatgpt';
-import {StudyStore,stateSchema,draftSchema,conflict} from './study-store';
-import {chapters,assessScene,type Scene,type TaskFeedback} from '../shared/chapters';
-import {generateTaskFeedback,type FeedbackInput} from './task-feedback';
+import type {Store} from './store.js';
+import type {ChatGPT} from './chatgpt.js';
+import {StudyStore,stateSchema,draftSchema,conflict} from './study-store.js';
+import {chapters,assessScene,type Scene,type TaskFeedback} from '../shared/chapters.js';
+import {generateTaskFeedback,type FeedbackInput} from './task-feedback.js';
 import {chooseModel} from '../probes/tutor-service.mjs';
-import {AssessmentStore} from './assessment-store';
+import {AssessmentStore} from './assessment-store.js';
 
 export type StudyOptions={app:FastifyInstance;store:Store;chat:ChatGPT;session:(req:any,reply:any)=>{owner:string};busy:Set<string>;feedbackProvider?:(input:FeedbackInput)=>Promise<TaskFeedback>;assessments?:AssessmentStore};
 export function studyRoutes({app,store,chat,session,busy,feedbackProvider,assessments}:StudyOptions){

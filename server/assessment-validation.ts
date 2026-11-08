@@ -1,5 +1,5 @@
 import {z} from 'zod';
-import type {Observation} from '../shared/progress';
+import type {Observation} from '../shared/progress.js';
 export const observationSchema=z.object({criterionId:z.enum(['task_fulfillment','evidence','development','organization','language_clarity']),status:z.enum(['demonstrated','needs_work','not_observable']),quote:z.string().max(650),reason:z.string().min(1).max(450)}).strict();
 export function validatedObservations(value:unknown,answer:string,source:string):Observation[]|null{
  const parsed=z.array(observationSchema).length(5).safeParse(value);if(!parsed.success)return null;

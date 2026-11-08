@@ -1,10 +1,10 @@
 import {z} from 'zod';
-import type {StudyOptions} from './study-routes';
-import type {StudyStore} from './study-store';
-import {AssessmentStore,responseHash} from './assessment-store';
-import {buildProgressSummary,historyItems,resolveAttempts,makeRange,dayKey} from './progress-summary';
-import {RUBRIC_VERSION} from '../shared/progress';
-import {generateTaskFeedback} from './task-feedback';
+import type {StudyOptions} from './study-routes.js';
+import type {StudyStore} from './study-store.js';
+import {AssessmentStore,responseHash} from './assessment-store.js';
+import {buildProgressSummary,historyItems,resolveAttempts,makeRange,dayKey} from './progress-summary.js';
+import {RUBRIC_VERSION} from '../shared/progress.js';
+import {generateTaskFeedback} from './task-feedback.js';
 import {chooseModel} from '../probes/tutor-service.mjs';
 export function progressRoutes({app,store,chat,session,busy,feedbackProvider,studies,assessments}:{studies:StudyStore;assessments:AssessmentStore}&StudyOptions){
  const rangeSchema=z.object({period:z.enum(['7','28','90','all']).default('28'),timeZone:z.string().max(100).default('UTC')});

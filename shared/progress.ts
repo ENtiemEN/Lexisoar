@@ -1,4 +1,4 @@
-import type {Skill} from './content';
+import type {Skill} from './content.js';
 
 export const RUBRIC_VERSION='stride-criteria-1';
 export const criteria={

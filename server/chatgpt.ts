@@ -2,7 +2,7 @@ import {randomBytes,randomUUID,createHash} from 'node:crypto';
 import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
 import {join} from 'node:path';
 import {createRemoteJWKSet,jwtVerify} from 'jose';
-import {Vault} from './vault';
+import {Vault} from './vault.js';
 export type Token={access_token:string;refresh_token?:string;id_token:string;expiresAt:number;clientId:string;subject:string};
 type Pending={state:string;nonce:string;verifier:string;started:number;url:string};
 export class ChatGPT{

@@ -1,7 +1,7 @@
-# Expediente académico · Stride English
-Versión documental 0.5, actualizada el 8/11/2026. Responsable: Enrique Julca. **Expediente de trabajo**, no entrega aceptada. Documentos completos el 1/12, revisión 2–3/12 y entrega académica provisional el 4/12/2026.
+# Expediente académico · LexiSoar
+Versión documental 0.6, actualizada el 8/11/2026. Responsable: Enrique Julca. **Expediente de trabajo**, no entrega aceptada. Documentos completos el 1/12, revisión 2–3/12 y entrega académica provisional el 4/12/2026.
 
-**Estado vigente: [incremento 0.5 — Grammar independiente](13-incremento-0.5.md).** El incremento 0.4 conserva Vocabulary y su evidencia. El incremento 0.3 conserva la evidencia de Progress. El incremento 0.2 se conserva como evidencia histórica. La tabla 0.1 inferior se conserva como registro del 7/11. Conexión GPT confirmada por el usuario; feedback contextual real comprobado separadamente el 8/11 con una respuesta ficticia. Google/sync real y micrófono físico de esta interfaz siguen pendientes.
+**Estado vigente: [incremento 0.6 — beta web privada](14-incremento-0.6.md).** La publicación completa con GPT continúa pendiente de autorización remota, configuración Google y validación publicada. El incremento 0.5 conserva su evidencia. El incremento 0.4 conserva Vocabulary y su evidencia. El incremento 0.3 conserva la evidencia de Progress. El incremento 0.2 se conserva como evidencia histórica. La tabla 0.1 inferior se conserva como registro del 7/11. Conexión GPT confirmada por el usuario; feedback contextual real comprobado separadamente el 8/11 con una respuesta ficticia. Google/sync real y micrófono físico de esta interfaz siguen pendientes.
 
 ## Índice
 - [01 Acta e interesados](01-acta-e-interesados.md).
@@ -18,6 +18,8 @@ Versión documental 0.5, actualizada el 8/11/2026. Responsable: Enrique Julca. *
 - [12 Incremento 0.4: Vocabulary independiente](12-incremento-0.4.md).
 - [13 Incremento 0.5: Grammar independiente](13-incremento-0.5.md).
 - [Calendario](../planificacion/02-calendario-provisional.md) y [UX/UI](../planificacion/01-brief-ux-ui.md).
+
+- [14 Incremento 0.6: cuentas y preparación web](14-incremento-0.6.md).
 
 ## Estado real del incremento 0.1.0
 | Área | Estado | Límite |

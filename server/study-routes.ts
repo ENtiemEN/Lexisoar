@@ -16,7 +16,7 @@ export function studyRoutes({app,store,chat,session,busy,feedbackProvider,assess
  function attempt(owner:string,id:string){const e=store.list(owner,'attempt').find(e=>e.id===id);if(!e?.data.runId)throw Object.assign(Error('Chapter response not found.'),{statusCode:404});const run=studies.get(owner,e.data.runId);const scene=run.chapter.scenes.find(s=>s.id===e.data.sceneId);if(!scene)throw Error('Scene not found.');return {e,run,scene};}
  app.get('/api/chapters',()=>({chapters}));
  app.get('/api/study-sessions',(req,reply)=>({runs:studies.list(session(req,reply).owner)}));
- app.post('/api/study-sessions',(req,reply)=>{const {chapterId}=z.object({chapterId:z.string()}).parse(req.body);return studies.snapshot(session(req,reply).owner,studies.create(session(req,reply).owner,chapterId).id);});
+ app.post('/api/study-sessions',(req,reply)=>{const {chapterId,id}=z.object({chapterId:z.string(),id:z.uuid().optional()}).parse(req.body);return studies.snapshot(session(req,reply).owner,studies.create(session(req,reply).owner,chapterId,id).id);});
  app.get('/api/study-sessions/:id',(req,reply)=>studies.snapshot(session(req,reply).owner,params(req).id));
  app.patch('/api/study-sessions/:id',(req,reply)=>{const owner=session(req,reply).owner,id=params(req).id,{revision,state}=z.object({revision:z.number().int().nonnegative(),state:stateSchema}).parse(req.body);const run=studies.get(owner,id);if(run.revision!==revision)throw conflict();
    if(state.sceneIndex>run.state.sceneIndex+1)throw Error('Finish the current scene before moving on.');

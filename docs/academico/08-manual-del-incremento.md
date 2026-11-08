@@ -32,3 +32,8 @@ Manual 0.4: [Vocabulary independiente](12-incremento-0.4.md): Explore → My wor
 
 
 Manual 0.5: [Grammar → Explore / Train / Review](13-incremento-0.5.md). Reiniciar el servicio tras actualizar. La ayuda GPT es explícita y el historial conserva las revisiones.
+
+
+## Actualización 0.6 (8/11/2026)
+
+La preparación de la beta web, cuentas privadas y evidencia actual se describe en [incremento 0.6](14-incremento-0.6.md). El [manual de despliegue](../despliegue-web.md) distingue implementación, comprobaciones SQL reales y validación publicada pendiente. Las secciones anteriores conservan su alcance histórico. No se considera aceptada la beta con IA hasta resolver Google/Vercel y GPT remoto autorizado.

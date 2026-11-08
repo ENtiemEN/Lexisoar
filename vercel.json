@@ -1,0 +1,11 @@
+{
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "functions": {"api/web.ts": {"maxDuration": 60}},
+  "rewrites": [
+    {"source": "/api/:path*", "destination": "/api/web?route=api/:path*"},
+    {"source": "/auth/:path*", "destination": "/api/web?route=auth/:path*"},
+    {"source": "/((?!assets/).*)", "destination": "/index.html"}
+  ]
+}

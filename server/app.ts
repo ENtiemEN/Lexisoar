@@ -18,14 +18,17 @@ import {AssessmentStore} from './assessment-store';
 import {progressRoutes} from './progress-routes';
 import {vocabularyRoutes,type VocabAssistProvider} from './vocabulary-routes';
 type Session={owner:string;csrf:string;label:string;cloud?:{access_token:string;refresh_token:string}};
-export async function buildApp(options:{root?:string;port?:number;store?:Store;feedbackProvider?:StudyOptions['feedbackProvider'];vocabularyAssistProvider?:VocabAssistProvider;grammarAssistProvider?:GrammarAssistProvider}={}){
- const port=options.port??4180,origin=`http://127.0.0.1:${port}`,root=resolve(options.root??'.local');mkdirSync(root,{recursive:true});
- const app=Fastify({logger:false,bodyLimit:15000000});await app.register(cookie);const store=options.store??new Store(join(root,'stride.sqlite'));const chat=new ChatGPT(root,origin);
+// Remote plan usage remains disabled until OpenAI grants the hosted integration.
+function remoteChat():ChatGPT{const unavailable=()=>{throw Object.assign(Error('Hosted ChatGPT access is not enabled yet. Your work is saved; use the local examples or self-review.'),{statusCode:503});};return {vault:{get:async()=>null,set:unavailable,remove:async()=>{}},token:async()=>unavailable(),start:unavailable,finish:async()=>unavailable()} as unknown as ChatGPT;}
+export async function buildApp(options:{root?:string;port?:number;store?:Store;remote?:{owner:string;label:string;csrf:string};feedbackProvider?:StudyOptions['feedbackProvider'];vocabularyAssistProvider?:VocabAssistProvider;grammarAssistProvider?:GrammarAssistProvider}={}){
+ const port=options.port??4180,origin=`http://127.0.0.1:${port}`,root=resolve(options.root??'.local');if(!options.remote)mkdirSync(root,{recursive:true});
+ const app=Fastify({logger:false,bodyLimit:15000000});await app.register(cookie);const store=options.store??new Store(join(root,'stride.sqlite'));const chat=options.remote?remoteChat():new ChatGPT(root,origin);
  const sessions=new Map<string,Session>(),google=new Map<string,{client:SupabaseClient;started:number}>(),busy=new Set<string>();
  const supabaseUrl=process.env.SUPABASE_URL,supabaseKey=process.env.SUPABASE_ANON_KEY,cloudConfigured=!!(supabaseUrl&&supabaseKey);
  const cookieOptions={httpOnly:true,sameSite:'lax' as const,path:'/'};
  app.addHook('onRequest',async(req,reply)=>{if(req.headers.host!==`127.0.0.1:${port}`)return reply.code(403).send({error:'Invalid host.'});reply.header('Cache-Control','no-store').header('Referrer-Policy','no-referrer').header('X-Content-Type-Options','nosniff');if(req.method==='OPTIONS')return reply.code(403).send();});
- function session(req:any,reply:any){let sid=req.cookies.stride_session;let s=sessions.get(sid);if(!s){sid=randomBytes(32).toString('base64url');s={owner:'device',csrf:randomBytes(32).toString('base64url'),label:'Local device'};sessions.set(sid,s);reply.setCookie('stride_session',sid,cookieOptions);}return s;}
+ function session(req:any,reply:any){if(options.remote)return {...options.remote,cloud:undefined};let sid=req.cookies.stride_session;let s=sessions.get(sid);if(!s){sid=randomBytes(32).toString('base64url');s={owner:'device',csrf:randomBytes(32).toString('base64url'),label:'Local device'};sessions.set(sid,s);reply.setCookie('stride_session',sid,cookieOptions);}return s;}
+ if(options.remote)app.addHook('preHandler',async(req,reply)=>{if(req.url.startsWith('/auth/')||['/api/audio','/api/logout','/api/sync'].includes(req.url)||req.url.startsWith('/api/audio/'))return reply.code(404).send({error:'Route is managed by the web gateway.'});});
  app.addHook('preHandler',async(req,reply)=>{if(['POST','PUT','DELETE','PATCH'].includes(req.method)){const s=session(req,reply);if(![origin,'http://127.0.0.1:5173'].includes(String(req.headers.origin))||req.headers['x-csrf-token']!==s.csrf)return reply.code(403).send({error:'Reload the app and try again.'});}});
  app.setErrorHandler((e,req,reply)=>{const err=e as Error&{statusCode?:number};const status=e instanceof z.ZodError?400:(err.statusCode&&err.statusCode<500?err.statusCode:400);reply.code(status).send({error:e instanceof z.ZodError?'Check the submitted fields.':err.message});});
  const assessments=new AssessmentStore(store);
@@ -33,7 +36,7 @@ export async function buildApp(options:{root?:string;port?:number;store?:Store;f
  progressRoutes({app,store,chat,session,busy,feedbackProvider:options.feedbackProvider,studies,assessments});
  const grammar=grammarRoutes({app,store,chat,session,busy,assistProvider:options.grammarAssistProvider});
  const vocabulary=vocabularyRoutes({app,store,chat,session,busy,assistProvider:options.vocabularyAssistProvider});
- app.get('/api/session',async(req,reply)=>{const s=session(req,reply);let connected=false;try{connected=!!await chat.vault.get(s.owner);}catch{}return {csrf:s.csrf,label:s.label,cloudConfigured,signedIn:!!s.cloud,chatgpt:connected,credentialStorage:'Windows DPAPI',localOnly:!s.cloud};});
+ app.get('/api/session',async(req,reply)=>{const s=session(req,reply);let connected=false;try{connected=!!await chat.vault.get(s.owner);}catch{}return {csrf:s.csrf,label:s.label,cloudConfigured:!!options.remote||cloudConfigured,signedIn:!!options.remote||!!s.cloud,chatgpt:connected,remote:!!options.remote,owner:s.owner,credentialStorage:options.remote?'Remote GPT access pending':'Windows DPAPI',localOnly:!options.remote&&!s.cloud};});
  app.get('/api/catalog',()=>({activities}));
  app.get('/api/progress',(req,reply)=>({events:store.list(session(req,reply).owner)}));
  app.post('/api/attempts',(req,reply)=>{const s=session(req,reply),data=attemptInput.parse(req.body),a=activities.find(a=>a.id===data.activityId);if(!a)return reply.code(404).send({error:'Activity not found.'});const result=assess(a,data.answer);store.append(s.owner,'attempt',{...data,result},data.id);return {saved:true,result};});

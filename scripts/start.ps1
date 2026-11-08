@@ -11,5 +11,5 @@ if (-not $running) {
  Start-Process -FilePath 'node' -ArgumentList '--import','tsx','server/index.ts' -WorkingDirectory $projectRoot -WindowStyle Hidden -RedirectStandardOutput '.local/server.log' -RedirectStandardError '.local/server-error.log'
  for ($i=0; $i -lt 30; $i++) { try { $response = Invoke-RestMethod ($strideUrl + '/api/session') -TimeoutSec 1; $running = $null -ne $response.csrf; if ($running) { break } } catch { }; Start-Sleep -Milliseconds 300 }
 }
-if (-not $running) { throw 'Stride could not start. See .local/server-error.log.' }
+if (-not $running) { throw 'LexiSoar could not start. See .local/server-error.log.' }
 Start-Process $strideUrl

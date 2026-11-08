@@ -1,0 +1,9 @@
+import {test,expect} from '@playwright/test';
+test('private web entry asks for Google before requesting learning data',async({page})=>{
+ const requested:string[]=[];await page.route('**/api/**',async route=>{const path=new URL(route.request().url()).pathname;requested.push(path);if(path==='/api/session')return route.fulfill({json:{remote:true,needsLogin:true,signedIn:false,chatgpt:false,cloudConfigured:true,label:'',csrf:''}});return route.abort();});
+ await page.goto('/');await expect(page.getByRole('heading',{name:'LexiSoar',exact:true})).toBeVisible();await expect(page.getByRole('link',{name:'Continue with Google'})).toHaveAttribute('href','/auth/google');expect(requested).toEqual(['/api/session']);await page.getByRole('link',{name:'Continue with Google'}).focus();await expect(page.getByRole('link',{name:'Continue with Google'})).toBeFocused();await page.screenshot({path:`output/verification/v06-login-${test.info().project.name}.png`,fullPage:true});
+});
+test('web settings exposes backup, private recordings and the actual GPT limitation',async({page})=>{
+ await page.route('**/api/session',async route=>{const response=await route.fetch(),session=await response.json();await route.fulfill({response,json:{...session,remote:true,signedIn:true,owner:'test-invited-user',label:'Invited learner'}});});
+ await page.route('**/api/recordings',route=>route.fulfill({json:{recordings:[]}}));await page.goto('/?view=settings');await page.getByRole('button',{name:'Open menu'}).click();await page.getByRole('button',{name:'Settings',exact:true}).click();await expect(page.getByRole('heading',{name:'Your web account'})).toBeVisible();await expect(page.getByText('Hosted GPT access is pending authorization.',{exact:false})).toBeVisible();await expect(page.getByRole('link',{name:'Export text progress'})).toHaveAttribute('href','/api/backup');await expect(page.getByText('Your recordings (0)')).toBeVisible();
+});

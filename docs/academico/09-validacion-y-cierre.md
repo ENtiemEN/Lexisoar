@@ -45,3 +45,8 @@ Verificación 0.4: [registro de Vocabulary](12-incremento-0.4.md), con evidencia
 
 
 Verificación 0.5: [registro de Grammar](13-incremento-0.5.md). Evidencia simulada separada de validación real y revisión humana pendiente. Fechas académicas 1/12 y 4/12/2026 sin cambios.
+
+
+## Actualización 0.6 (8/11/2026)
+
+La preparación de la beta web, cuentas privadas y evidencia actual se describe en [incremento 0.6](14-incremento-0.6.md). El [manual de despliegue](../despliegue-web.md) distingue implementación, comprobaciones SQL reales y validación publicada pendiente. Las secciones anteriores conservan su alcance histórico. No se considera aceptada la beta con IA hasta resolver Google/Vercel y GPT remoto autorizado.

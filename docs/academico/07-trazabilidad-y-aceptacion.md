@@ -38,3 +38,8 @@ Actualización 0.4: [matriz de Vocabulary y verificación](12-incremento-0.4.md)
 
 
 Actualización 0.5: [matriz y aceptación de Grammar](13-incremento-0.5.md). Evaluación humana del contenido y eficacia siguen pendientes; las pruebas técnicas no las sustituyen.
+
+
+## Actualización 0.6 (8/11/2026)
+
+La preparación de la beta web, cuentas privadas y evidencia actual se describe en [incremento 0.6](14-incremento-0.6.md). El [manual de despliegue](../despliegue-web.md) distingue implementación, comprobaciones SQL reales y validación publicada pendiente. Las secciones anteriores conservan su alcance histórico. No se considera aceptada la beta con IA hasta resolver Google/Vercel y GPT remoto autorizado.

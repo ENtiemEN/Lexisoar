@@ -1,5 +1,5 @@
 import {useEffect,useRef,useState} from 'react';
-import {api} from './api';
+import {api,cacheDraft} from './api';
 import type {StudyRun,RunState,FeedbackRecord} from '../shared/chapters';
 export type Attempt={id:string;createdAt:string;data:any;feedback?:FeedbackRecord|null};
 export type StudySnapshot={run:StudyRun;attempts:Attempt[]};
@@ -15,7 +15,7 @@ export function useStudy(initial:StudySnapshot){
      finally{inFlight.current=false;if(mounted.current)setSaving(false);}
    });queue.current=job;return job;
  }
- function edit(change:(state:RunState)=>void){if(conflict)return;const state=structuredClone(current.current.state);change(state);show({...current.current,state});dirty.current=true;if(timer.current)clearTimeout(timer.current);timer.current=setTimeout(()=>void persist().catch(()=>{}),650);}
+ function edit(change:(state:RunState)=>void){if(conflict)return;const state=structuredClone(current.current.state);change(state);show({...current.current,state});dirty.current=true;cacheDraft('study-sessions/'+current.current.id,{revision:revision.current,state});if(timer.current)clearTimeout(timer.current);timer.current=setTimeout(()=>void persist().catch(()=>{}),650);}
  useEffect(()=>{mounted.current=true;const unload=(e:BeforeUnloadEvent)=>{if(dirty.current||inFlight.current){e.preventDefault();e.returnValue='';}};const hide=()=>{if(document.visibilityState==='hidden')void persist().catch(()=>{});};window.addEventListener('beforeunload',unload);document.addEventListener('visibilitychange',hide);return()=>{mounted.current=false;if(timer.current)clearTimeout(timer.current);window.removeEventListener('beforeunload',unload);document.removeEventListener('visibilitychange',hide);};},[]);
  return {run,attempts,saving,unsaved:dirty.current,error,conflict,edit,persist,accept,setAttempts,current,revision};
 }

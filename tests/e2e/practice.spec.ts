@@ -19,7 +19,7 @@ test('four-skill practice, response persistence, and honest open-task feedback',
  await page.getByRole('button',{name:'View history',exact:true}).click();
  await expect(page.getByRole('article').filter({hasText:'Build a Sentence'}).first()).toBeVisible();
  const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth+1);expect(overflow).toBe(false);
- await page.getByRole('button',{name:'Stride home',exact:true}).click();
+ await page.getByRole('button',{name:'LexiSoar home',exact:true}).click();
  await page.screenshot({path:`output/verification/stride-${test.info().project.name}.png`,fullPage:true});
 });
 test('independent attempts hide aids and theme remains usable',async({page})=>{

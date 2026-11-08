@@ -1,4 +1,6 @@
-# Stride · English in motion
+# LexiSoar · English in motion
+**0.6: beta web privada preparada.** [Guía de despliegue](docs/despliegue-web.md). Esquema Supabase aplicado; Google, Vercel y GPT remoto autorizado pendientes. La versión local conserva la IA y sus datos.
+
 Aplicación local con interfaz íntegramente en inglés. **0.5.0**: Grammar independiente; Vocabulary independiente y Home con tres caminos; Progress visual y accionable; capítulo inmersivo de cuatro habilidades, borradores recuperables, feedback contextual y reintentos. Biblioteca anterior con 60 actividades **en borrador**, FSRS y portafolio conservados. No es un curso C2 completo ni un simulador oficial.
 
 ## Abrir
@@ -10,7 +12,7 @@ npm run build
 npm start
 ```
 
-Abre **http://127.0.0.1:4180/**. También puedes usar **Start Stride.cmd**: inicia el servicio oculto y abre el navegador; requiere dependencias instaladas. Compila si falta dist. Tras modificar código: vuelve a ejecutar npm run build. El laboratorio anterior permanece separado en 4178.
+Abre **http://127.0.0.1:4180/**. También puedes usar **Start LexiSoar.cmd** (el acceso anterior sigue disponible): inicia el servicio oculto y abre el navegador; requiere dependencias instaladas. Compila si falta dist. Tras modificar código: vuelve a ejecutar npm run build. El laboratorio anterior permanece separado en 4178.
 
 Desarrollo: npm run dev (interfaz 5173, servicio 4180). Verificar: npm run build, npm test, npm run test:e2e. Regresiones heredadas: node --test probes/auth-flow.test.mjs probes/recording.test.mjs probes/tutor-service.test.mjs. Ninguna prueba automática necesita gastar cuota de IA.
 
@@ -26,7 +28,7 @@ Settings → Connect ChatGPT autoriza tu propio plan en OpenAI. Se conserva la c
 Modo local: un solo espacio compartido por quienes usen este servicio bajo la cuenta Windows. **No es un login privado multiusuario.** Google separa progreso por identidad verificada; tras reiniciar el servicio se debe iniciar sesión otra vez. El progreso local no se migra automáticamente a Google.
 
 ## Supabase opcional
-No se creó ni modificó ningún proyecto remoto.
+La beta web usa el proyecto LexiSoar: consultar la guía de despliegue anterior. Las instrucciones siguientes corresponden solo a la sincronización local heredada.
 
 1. En un proyecto propio ejecuta supabase/schema.sql. Activa Google en Supabase Auth y configura OAuth siguiendo sus instrucciones.
 2. En Supabase autoriza http://127.0.0.1:4180/auth/google/callback. En Google usa la URL de retorno de **Supabase**, no la del servicio local.

@@ -52,3 +52,8 @@ Vocabulary 0.4 añade almacenamiento local por propietario, tarjetas por signifi
 
 
 Grammar 0.5 añade sesiones versionadas, respuestas, ayudas y tarjetas por objetivo en SQLite local, con aislamiento, revisiones e idempotencia. [Contratos y respaldo](13-incremento-0.5.md). Sin migración remota ni cambios a eventos anteriores.
+
+
+## Actualización 0.6 (8/11/2026)
+
+La preparación de la beta web, cuentas privadas y evidencia actual se describe en [incremento 0.6](14-incremento-0.6.md). El [manual de despliegue](../despliegue-web.md) distingue implementación, comprobaciones SQL reales y validación publicada pendiente. Las secciones anteriores conservan su alcance histórico. No se considera aceptada la beta con IA hasta resolver Google/Vercel y GPT remoto autorizado.

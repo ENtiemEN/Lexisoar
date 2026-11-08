@@ -34,9 +34,9 @@ export class VocabularyStore{
   const now=Date.now();return {selected:words.length,due:cards.filter(c=>Date.parse(c.due)<=now).length,newWords:words.filter(w=>!d.cards[cardKey(w.entry,'meaning')]||!d.cards[cardKey(w.entry,'word')]).length,activeDays:new Set(results.map(r=>r.createdAt.slice(0,10))).size,ratings,word:metric('word'),context:metric('context'),nextDue:cards.map(c=>c.due).filter(t=>Date.parse(t)>now).sort()[0]??null,examples};
  }
  home(owner:string){const d=this.read(owner);return {words:Object.values(d.words),summary:this.summary(d),session:Object.values(d.sessions).filter(s=>s.status!=='completed').sort((a,b)=>b.updatedAt.localeCompare(a.updatedAt))[0]??null};}
- create(owner:string,reviewLimit:number,newLimit:number){return this.mutate(owner,d=>{
+ create(owner:string,reviewLimit:number,newLimit:number,id:string=randomUUID()){return this.mutate(owner,d=>{const requestSignature=JSON.stringify([reviewLimit,newLimit]);if(Object.hasOwn(d.sessions,id)){if(d.sessions[id].requestSignature!==requestSignature)throw Error('This session identity was already used for different settings.');return d.sessions[id];}
   const active=Object.values(d.sessions).find(s=>s.status!=='completed');if(active)return active;
-  const words=Object.values(d.words).filter(w=>w.selected&&!w.archived),now=Date.now(),session:VocabSession={id:randomUUID(),revision:0,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),status:'active',index:0,steps:[],draft:'',revealed:false,results:[]};
+  const words=Object.values(d.words).filter(w=>w.selected&&!w.archived),now=Date.now(),session:VocabSession={id,requestSignature,revision:0,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),status:'active',index:0,steps:[],draft:'',revealed:false,results:[]};
   const due=words.flatMap(w=>(['meaning','word'] as Direction[]).flatMap(dir=>{const c=d.cards[cardKey(w.entry,dir)];return c&&Date.parse(c.due)<=now?[{entry:w.entry,dir,due:c.due}]:[];})).sort((a,b)=>a.due.localeCompare(b.due)).slice(0,reviewLimit);
   for(const item of due)session.steps.push({entry:item.entry,kind:item.dir,direction:item.dir});
   const newWords=words.filter(w=>(['meaning','word'] as Direction[]).some(dir=>!d.cards[cardKey(w.entry,dir)])).slice(0,newLimit);

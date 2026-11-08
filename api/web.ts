@@ -65,7 +65,10 @@ export default async function handler(req:IncomingMessage&{body?:unknown},res:Se
   const result=await app.inject({method:method as any,url:url.pathname+url.search,headers:{host:'127.0.0.1:4180',origin:'http://127.0.0.1:4180','x-csrf-token':auth.session.csrf,...(payload?{'content-type':'application/json'}:{})},payload:payload?JSON.stringify(payload):undefined});
   const state=dumpWorkspace(store,owner);if(JSON.stringify(state)!==before)await repository.commit(owner,saved.revision,state,importedHash);
   res.statusCode=result.statusCode;res.setHeader('Content-Type',String(result.headers['content-type']??'application/json'));if(result.headers['content-disposition'])res.setHeader('Content-Disposition',String(result.headers['content-disposition']).replace('stride-','lexisoar-'));res.end(result.rawPayload);
- }catch(error){const e=error as Error&{statusCode?:number};send(error instanceof z.ZodError?400:e.statusCode??503,{error:error instanceof z.ZodError?'Check the submitted fields.':e.message});}
+ }catch(error){const e=error as Error&{statusCode?:number;code?:string},status=error instanceof z.ZodError?400:e.statusCode??503;
+  if(status>=500)console.error('LexiSoar web request failed',{name:e.name,code:e.code,stack:e.stack});
+  const startupFailure=e.code==='ERR_REQUIRE_ESM'||e.code==='ERR_MODULE_NOT_FOUND';
+  send(status,{error:error instanceof z.ZodError?'Check the submitted fields.':startupFailure?'The web service could not start. Please try again later.':e.message});}
  finally{if(app)await app.close();}
 }
 async function admitted(admin:ReturnType<typeof supabaseClient>,email:string){const {data,error}=await admin.from('lexisoar_invites').select('email').eq('email',email.toLowerCase()).eq('enabled',true).maybeSingle();if(error)throw Error('Could not check beta access.');return !!data;}

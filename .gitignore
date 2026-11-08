@@ -1,0 +1,51 @@
+# Dependencies and generated builds
+node_modules/
+dist/
+coverage/
+.vite/
+.cache/
+*.tsbuildinfo
+
+# Environment variables (keep the safe setup template)
+.env
+.env.*
+!.env.example
+
+# Local progress, recordings, OAuth credentials and temporary files
+.local/
+output/
+tmp/
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.db
+*.db-*
+stride-progress*.json
+*.pem
+*.key
+*.p12
+*.pfx
+service-account*.json
+
+# Local deployment metadata; keep supabase/schema.sql in Git
+.vercel/
+supabase/.temp/
+supabase/.branches/
+
+# Test reports and logs
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+*.log
+
+# Machine-specific files
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vs/
+*.swp
+*.swo
+*~

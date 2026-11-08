@@ -1,0 +1,12 @@
+import React from 'react';
+import {createRoot} from 'react-dom/client';
+import App from './App';
+import './style.css';
+import '@fontsource-variable/manrope';
+import '@fontsource-variable/newsreader/standard.css';
+import '@fontsource-variable/newsreader/standard-italic.css';
+import './immersive.css';
+import './progress.css';
+import './vocabulary.css';
+import './grammar.css';
+createRoot(document.getElementById('root')!).render(<React.StrictMode><App/></React.StrictMode>);

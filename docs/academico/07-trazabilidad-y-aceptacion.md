@@ -43,3 +43,8 @@ Actualización 0.5: [matriz y aceptación de Grammar](13-incremento-0.5.md). Eva
 ## Actualización 0.6 (8/11/2026)
 
 La preparación de la beta web, cuentas privadas y evidencia actual se describe en [incremento 0.6](14-incremento-0.6.md). El [manual de despliegue](../despliegue-web.md) distingue implementación, comprobaciones SQL reales y validación publicada pendiente. Las secciones anteriores conservan su alcance histórico. No se considera aceptada la beta con IA hasta resolver Google/Vercel y GPT remoto autorizado.
+
+
+## Trazabilidad 0.7 (10/11/2026)
+
+R07-SALIDA → useVoice/useStudy/ChapterPlayer y ExitRecovery → pruebas stories/chapter/web-cache/cloud-gateway. R07-CATALOGO → chapters/story-catalog/StoriesView → diez historias, cuatro habilidades, reinicio e aislamiento. R07-PRACTICE → content/LegacyApp → 60 títulos únicos, IDs y respuestas conservados. La aceptación humana publicada sigue pendiente. Véase [incremento 0.7](15-incremento-0.7.md).

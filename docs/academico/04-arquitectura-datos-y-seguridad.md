@@ -57,3 +57,8 @@ Grammar 0.5 añade sesiones versionadas, respuestas, ayudas y tarjetas por objet
 ## Actualización 0.6 (8/11/2026)
 
 La preparación de la beta web, cuentas privadas y evidencia actual se describe en [incremento 0.6](14-incremento-0.6.md). El [manual de despliegue](../despliegue-web.md) distingue implementación, comprobaciones SQL reales y validación publicada pendiente. Las secciones anteriores conservan su alcance histórico. No se considera aceptada la beta con IA hasta resolver Google/Vercel y GPT remoto autorizado.
+
+
+## Arquitectura 0.7 (10/11/2026)
+
+Metadatos de presentación opcionales en snapshots; compatibilidad de Mill Street sin reescritura. UUID estable por grabación; reserva pendiente renovable, detección del objeto subido, finalización idempotente después de un conflicto de workspace. Continúan RLS, propietario verificado, bucket privado, cuotas y permisos solo de servidor para reservar. No cambia la estructura de los datos de aprendizaje. Véase [incremento 0.7](15-incremento-0.7.md).

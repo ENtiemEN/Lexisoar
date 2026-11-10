@@ -1,7 +1,7 @@
 # Expediente académico · LexiSoar
-Versión documental 0.6, actualizada el 8/11/2026. Responsable: Enrique Julca. **Expediente de trabajo**, no entrega aceptada. Documentos completos el 1/12, revisión 2–3/12 y entrega académica provisional el 4/12/2026.
+Versión documental 0.7, actualizada el 10/11/2026. Responsable: Enrique Julca. **Expediente de trabajo**, no entrega aceptada. Documentos completos el 1/12, revisión 2–3/12 y entrega académica provisional el 4/12/2026.
 
-**Estado vigente: [incremento 0.6 — beta web privada](14-incremento-0.6.md).** La publicación completa con GPT continúa pendiente de autorización remota, configuración Google y validación publicada. El incremento 0.5 conserva su evidencia. El incremento 0.4 conserva Vocabulary y su evidencia. El incremento 0.3 conserva la evidencia de Progress. El incremento 0.2 se conserva como evidencia histórica. La tabla 0.1 inferior se conserva como registro del 7/11. Conexión GPT confirmada por el usuario; feedback contextual real comprobado separadamente el 8/11 con una respuesta ficticia. Google/sync real y micrófono físico de esta interfaz siguen pendientes.
+**Estado vigente: [incremento 0.7 — diez historias y salida recuperable](15-incremento-0.7.md).** El usuario confirmó el funcionamiento en producción de 0.6. El código 0.7 tiene verificación automática local y está pendiente de push/despliegue y aceptación publicada. GPT remoto autorizado permanece pendiente. Los incrementos anteriores conservan su evidencia histórica; no se convierten retroactivamente en validaciones actuales.
 
 ## Índice
 - [01 Acta e interesados](01-acta-e-interesados.md).
@@ -55,3 +55,5 @@ Entrega (§2.6, pp.80–92): entregables revisables con aceptación. Medición (
 Principios destacados: valor, calidad, adaptación, interesados, pensamiento sistémico y cambio. Tener un botón de grabación es una salida; completar una intervención es un resultado de uso; mejorar con material nuevo sería un beneficio por medir. No confundirlos con certificación C2.
 
 
+
+- [15 Incremento 0.7: historias, salida y Practice](15-incremento-0.7.md).

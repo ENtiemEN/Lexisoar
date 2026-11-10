@@ -1,5 +1,5 @@
 # LexiSoar · English in motion
-**0.6: beta web privada preparada.** [Guía de despliegue](docs/despliegue-web.md). Esquema Supabase aplicado; Google, Vercel y GPT remoto autorizado pendientes. La versión local conserva la IA y sus datos.
+**0.7: diez historias, salida recuperable y Practice con títulos claros.** [Estado y pruebas](docs/academico/15-incremento-0.7.md). El usuario confirmó 0.6 en producción; estos cambios requieren push y nuevo despliegue. GPT remoto autorizado sigue pendiente. La edición local conserva la conexión existente.
 
 Aplicación local con interfaz íntegramente en inglés. **0.5.0**: Grammar independiente; Vocabulary independiente y Home con tres caminos; Progress visual y accionable; capítulo inmersivo de cuatro habilidades, borradores recuperables, feedback contextual y reintentos. Biblioteca anterior con 60 actividades **en borrador**, FSRS y portafolio conservados. No es un curso C2 completo ni un simulador oficial.
 

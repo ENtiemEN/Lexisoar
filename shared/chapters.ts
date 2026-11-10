@@ -1,11 +1,14 @@
 import type {Activity, Skill} from './content.js';
 import type {Observation} from './progress.js';
+import {additionalChapters} from './story-catalog.js';
 
 export type Scene = {
   id: string; skill: Skill; label: string; objective: string; instruction: string;
   activity: Activity; questions?: {id: string; prompt: string; options: string[]; answer: string; why: string}[];
 };
-export type Chapter = {id: string; version: number; title: string; description: string; minutes: number; fiction: boolean; scenes: Scene[]; vocabulary: Activity['vocabulary'][]};
+export type DialogueTurn={speaker:string;role:string;text:string};
+export type StoryPresentation={theme:string;kind:'street'|'museum'|'cafe'|'recording'|'garden'|'train'|'team'|'repair'|'festival'|'library';document:{issuer:string;category:string;title:string;date:string;footer:string};dialogue:DialogueTurn[];listeningTitle:string;sources:{label:string;text:string}[];speakingTitle:string;email:{to:string;subject:string};reviewLabel:string};
+export type Chapter = {id: string; version: number; title: string; description: string; minutes: number; fiction: boolean; scenes: Scene[]; vocabulary: Activity['vocabulary'][];presentation?:StoryPresentation};
 export type Draft = {text: string; source: 'typed'|'speech'; choices: Record<string,string>; helped: boolean; audioId?: string};
 export type SceneWork = {draft: Draft; attemptIds: string[]; view: 'respond'|'feedback'};
 export type RunState = {sceneIndex: number; status: 'active'|'paused'|'completed'; consent: boolean; model?: string; scenes: Record<string,SceneWork>; review: Record<string,number>; reflection: string};
@@ -46,7 +49,10 @@ export const cityChapter:Chapter = {
       activity:activity('quiet-city-v1-writing','Writing','Write an Email',notice+'\n\nCONVERSATION\n'+dialogue,'Write an email to the transport office. Recommend whether to repeat the trial, support your view with evidence, and suggest one practical change. Around 80–120 words is a useful practice target, not a requirement.','Check the purpose, recommendation, evidence, practical change and polite tone. Choose one point to improve.')},
   ],
 };
-export const chapters = [cityChapter];
+const cityPresentation:StoryPresentation={theme:'Community & transport',kind:'street',document:{issuer:'Riverside Transport Office',category:'A one-evening experiment',title:'A quieter street. For one night.',date:'Friday 18 September · 18:00–22:00',footer:'Mill Street / Riverside'},dialogue:cityDialogue,listeningTitle:'Same street. Different evenings.',sources:[{label:'The notice',text:'A one-evening trial. Exceptions for buses and emergency vehicles. A decision still to be made.'},{label:'The conversation',text:'Maya values the quieter street. Jon asks what happened to access and traffic nearby.'}],speakingTitle:'Would you try it again?',email:{to:'Riverside Transport Office',subject:'Feedback on the Mill Street trial'},reviewLabel:'The evening, in your own words'};
+cityChapter.presentation=cityPresentation;
+export function storyPresentation(chapter:Chapter):StoryPresentation{return chapter.presentation??(chapter.id==='quiet-city'?cityPresentation:{...cityPresentation,theme:'English in context',dialogue:[],document:{issuer:'Community team',category:'Practice material',title:chapter.title,date:'Fictional scenario',footer:chapter.title},sources:chapter.scenes.slice(0,2).map(s=>({label:s.label,text:s.activity.stimulus})),speakingTitle:chapter.scenes[2]?.instruction??'Share your view',email:{to:'Project team',subject:chapter.title}});}
+export const chapters = [cityChapter,...additionalChapters];
 export const blankDraft = ():Draft => ({text:'',source:'typed',choices:{},helped:false});
 export const initialRunState = ():RunState => ({sceneIndex:0,status:'active',consent:false,scenes:{},review:{},reflection:''});
 export function assessScene(scene:Scene,draft:Draft){

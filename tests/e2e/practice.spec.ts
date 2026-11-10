@@ -5,7 +5,7 @@ test('four-skill practice, response persistence, and honest open-task feedback',
  for(const [skill,answer]of [['Reading','restore'],['Listening',''],['Speaking','A short break restores my attention.'],['Writing','A short break restores my attention.']]){
   await navigate(page,'Practice');
   const back=page.getByRole('button',{name:'All challenges',exact:true});if(await back.isVisible())await back.click();
-  await page.getByRole('button',{name:new RegExp(`^${skill} .*The quiet experiment.*Theme 1`)}).first().click();
+  await page.getByRole('button',{name:new RegExp(`^${skill} .*`)}).first().click();
   if(skill==='Listening')await page.getByRole('radio',{name:/Try the information desk/}).check();
   else await page.getByRole('textbox',{name:'Your response',exact:true}).fill(answer);
   await page.getByRole('button',{name:'Save response',exact:true}).click();
@@ -24,7 +24,7 @@ test('four-skill practice, response persistence, and honest open-task feedback',
 });
 test('independent attempts hide aids and theme remains usable',async({page})=>{
  await page.goto('/');await navigate(page,'Practice');
- await page.getByRole('button',{name:/^Listening .*The quiet experiment.*Theme 1/}).first().click();
+ await page.getByRole('button',{name:/^Listening .*/}).first().click();
  await page.getByRole('combobox',{name:'Mode',exact:true}).selectOption('exam');
  await expect(page.getByRole('button',{name:'Show transcript (with help)',exact:true})).toHaveCount(0);
  await expect(page.getByRole('button',{name:'Need a little help?',exact:true})).toHaveCount(0);

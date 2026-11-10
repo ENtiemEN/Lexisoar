@@ -4,7 +4,7 @@ async function clearRound(page:Page){const h=await headers(page),home=await(awai
 test('balanced home and independent catalog work without a story or AI',async({page},info)=>{
  let calls=0;page.on('request',r=>{if(r.method()==='POST'&&r.url().includes('/vocabulary/assist'))calls++;});
  await page.goto('/');await expect(page.getByRole('heading',{name:'What would you like to work on?',exact:false})).toBeVisible();
- for(const label of ['Explore Stories','Open Practice','Open Vocabulary'])await expect(page.getByRole('button',{name:label,exact:true})).toBeVisible();
+ for(const label of ['Browse stories','Open Practice','Open Vocabulary'])await expect(page.getByRole('button',{name:label,exact:true})).toBeVisible();
  await page.screenshot({path:`output/verification/v04-home-${info.project.name}.png`,fullPage:true});
  await page.getByRole('button',{name:'Open Vocabulary',exact:true}).click();await page.getByRole('tab',{name:'Explore',exact:true}).click();
  await expect(page.locator('.vocab-entry')).toHaveCount(10);await page.getByLabel('Approximate level',{exact:true}).selectOption('C2');await expect(page.getByText('30 meanings · original draft content',{exact:true})).toBeVisible();

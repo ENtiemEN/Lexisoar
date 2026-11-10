@@ -65,3 +65,10 @@ Prueba manual publicada: login con ambos invitados; rechazo de un tercero; creac
 Reversión: usar el deployment anterior en Vercel y deshabilitar acceso a la beta si cambia el formato de datos. No borrar tablas, bucket ni archivos locales. Exportar antes de una migración incompatible. Las migraciones aplicadas son aditivas; no ejecutar `supabase/schema.sql` como sustituto del esquema web.
 
 Referencias: [Google con Supabase](https://supabase.com/docs/guides/auth/social-sign-in/auth-google), [Auth hooks](https://supabase.com/docs/guides/auth/auth-hooks), [RLS](https://supabase.com/docs/guides/database/postgres/row-level-security), [Vite en Vercel](https://vercel.com/docs/frameworks/frontend/vite), [límites de Functions](https://vercel.com/docs/functions/limitations), [uso de planes ChatGPT](https://developers.openai.com/siwc/token-sharing-open-source).
+
+
+## Actualización 0.7 (10/11/2026)
+
+El proyecto Supabase ya tiene aplicada la migración aditiva `lexisoar_audio_resume`; no hace falta pegar SQL ni cambiar Google o variables de entorno. El código permanece local hasta el push del usuario. Después del push, comprobar el despliegue nuevo de main y probar con una cuenta invitada: diez historias, Start again y Previous runs, Pause & exit con grabación y recuperación tras recarga. No basta con que el build figure Ready para dar por aceptado ese recorrido.
+
+Para otra instalación Supabase, aplicar las migraciones versionadas en orden antes de publicar. La reserva pendiente se renueva con el mismo UUID; no eliminar ni recrear la tabla/bucket. Reversión de UI/backend: volver al commit anterior; la función aditiva sigue siendo compatible con el protocolo anterior, conservando sus límites. No borrar progreso para revertir. Audio subido pero no enlazado puede finalizarse al reintentar; si se abandona, revisar Settings para eliminar la grabación. Los ensayos automáticos de Storage son simulados; el recorrido autenticado de la versión nueva continúa pendiente hasta publicar.

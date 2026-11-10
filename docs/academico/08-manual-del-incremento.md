@@ -37,3 +37,8 @@ Manual 0.5: [Grammar → Explore / Train / Review](13-incremento-0.5.md). Reinic
 ## Actualización 0.6 (8/11/2026)
 
 La preparación de la beta web, cuentas privadas y evidencia actual se describe en [incremento 0.6](14-incremento-0.6.md). El [manual de despliegue](../despliegue-web.md) distingue implementación, comprobaciones SQL reales y validación publicada pendiente. Las secciones anteriores conservan su alcance histórico. No se considera aceptada la beta con IA hasta resolver Google/Vercel y GPT remoto autorizado.
+
+
+## Manual 0.7 (10/11/2026)
+
+Home → Browse stories. Elegir una de diez historias → Start story → Begin chapter. Continue recupera el recorrido pendiente; Start again confirma un recorrido nuevo. Previous runs conserva los anteriores. Pause & exit permite reintentar o descargar audio; Exit without recording exige confirmación y conserva texto. Si falla el texto, descargar el borrador antes de Exit with local draft. En Settings web se consultan copias pendientes del dispositivo y grabaciones privadas. Practice muestra título específico, formato y tema. Véase [incremento 0.7](15-incremento-0.7.md).

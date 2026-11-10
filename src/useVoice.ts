@@ -17,14 +17,16 @@ export function useVoice(onText:(text:string)=>void){
  const chunks=useRef<Blob[]>([]),final=useRef(''),callback=useRef(onText),timer=useRef<ReturnType<typeof setTimeout>|null>(null),settleTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
  const recordingDone=useRef(true),recognitionDone=useRef(true),recognitionFailed=useRef(false);
  callback.current=onText;
+ const startEpoch=useRef(0);const latestBlob=useRef<Blob|null>(null),waiters=useRef<((blob:Blob|null)=>void)[]>([]);
+ function stopAndWait():Promise<Blob|null>{if(recordingDone.current&&recognitionDone.current&&!active.current)return Promise.resolve(latestBlob.current);return new Promise(resolve=>{waiters.current.push(resolve);stop();setTimeout(()=>{if(waiters.current.includes(resolve)){stream.current?.getTracks().forEach(t=>t.stop());recognition.current?.abort();recordingDone.current=true;recognitionDone.current=true;finishStop();if(mounted.current)setError('Recording did not finish normally. Check your transcript and any available audio.');}},5000);});}
  function finishStop(){
   if(!recordingDone.current||!recognitionDone.current)return;
   if(settleTimer.current)clearTimeout(settleTimer.current);
   stream.current?.getTracks().forEach(t=>t.stop());
-  if(mounted.current)setStopping(false);
+  if(mounted.current)setStopping(false);for(const resolve of waiters.current.splice(0))resolve(latestBlob.current);
  }
  function stop(){
-  active.current=false;
+  startEpoch.current++;active.current=false;
   if(timer.current)clearTimeout(timer.current);
   if(mounted.current){setRecording(false);setStopping(true);}
   const r=recorder.current;
@@ -46,16 +48,16 @@ export function useVoice(onText:(text:string)=>void){
  useEffect(()=>{if(!blob){setPreview('');return;}const url=URL.createObjectURL(blob);setPreview(url);return()=>URL.revokeObjectURL(url);},[blob]);
  async function start(){
   if(starting.current||active.current||stopping)return;
-  starting.current=true;setError('');setBlob(null);final.current='';callback.current('');
+  const epoch=++startEpoch.current;starting.current=true;setError('');latestBlob.current=null;setBlob(null);final.current='';callback.current('');
   recognition.current=null;recognitionDone.current=true;recordingDone.current=false;recognitionFailed.current=false;
   try{
-   const media=await navigator.mediaDevices.getUserMedia({audio:true});
-   if(!mounted.current){media.getTracks().forEach(t=>t.stop());return;}
+   let expired=false;const permission=navigator.mediaDevices.getUserMedia({audio:true});void permission.then(late=>{if(expired||!mounted.current)late.getTracks().forEach(t=>t.stop());}).catch(()=>{});let permissionTimer:ReturnType<typeof setTimeout>;const media=await Promise.race([permission,new Promise<never>((_,reject)=>{permissionTimer=setTimeout(()=>{expired=true;reject(Error('Microphone permission timed out.'));},15000);})]).finally(()=>clearTimeout(permissionTimer));
+   if(!mounted.current||epoch!==startEpoch.current){media.getTracks().forEach(t=>t.stop());return;}
    stream.current=media;active.current=true;setRecording(true);chunks.current=[];
    const mime=['audio/webm','audio/ogg','audio/mp4'].find(t=>MediaRecorder.isTypeSupported(t));
    const r=new MediaRecorder(media,mime?{mimeType:mime}:undefined);recorder.current=r;
    r.ondataavailable=e=>{if(e.data.size)chunks.current.push(e.data);};
-   r.onstop=()=>{recordingDone.current=true;if(mounted.current)setBlob(new Blob(chunks.current,{type:r.mimeType.split(';')[0]}));finishStop();};
+   r.onstop=()=>{recordingDone.current=true;latestBlob.current=new Blob(chunks.current,{type:r.mimeType.split(';')[0]});if(mounted.current)setBlob(latestBlob.current);finishStop();};
    r.onerror=()=>{setError('Recording stopped unexpectedly. Review any saved transcript before continuing.');stop();};
    r.start();
    timer.current=setTimeout(()=>{stop();if(mounted.current)setError('The five-minute safety limit was reached. Review your recording before sending.');},300000);
@@ -88,5 +90,5 @@ export function useVoice(onText:(text:string)=>void){
    if(mounted.current)setError('Microphone could not start. Check browser permissions or type your response.');
   }finally{starting.current=false;}
  }
- return {recording,stopping,error,blob,preview,start,stop};
+ return {recording,stopping,error,blob,preview,start,stop,stopAndWait};
 }

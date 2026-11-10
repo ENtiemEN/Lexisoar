@@ -50,3 +50,8 @@ Verificación 0.5: [registro de Grammar](13-incremento-0.5.md). Evidencia simula
 ## Actualización 0.6 (8/11/2026)
 
 La preparación de la beta web, cuentas privadas y evidencia actual se describe en [incremento 0.6](14-incremento-0.6.md). El [manual de despliegue](../despliegue-web.md) distingue implementación, comprobaciones SQL reales y validación publicada pendiente. Las secciones anteriores conservan su alcance histórico. No se considera aceptada la beta con IA hasta resolver Google/Vercel y GPT remoto autorizado.
+
+
+## Validación 0.7 (10/11/2026)
+
+Ver [evidencia 0.7](15-incremento-0.7.md): pruebas automáticas y SQL real separados de pruebas físicas y producción pendientes. Migración de reservas aplicada, sin alterar aprendizaje anterior. Publicación anterior confirmada por el usuario; 0.7 requiere push y despliegue antes de evaluar su recorrido con un invitado. Véase [incremento 0.7](15-incremento-0.7.md).
